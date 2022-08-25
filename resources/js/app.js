@@ -1,5 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
+import '../css/all.css';
+import '../css/styles.css';
+//import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i';
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/inertia-vue3';
@@ -21,3 +24,9 @@ createInertiaApp({
 });
 
 InertiaProgress.init({ color: '#4B5563' });
+
+var link = document.createElement('link');
+link.setAttribute('rel', 'stylesheet');
+link.setAttribute('type', 'text/css');
+link.setAttribute('href', 'https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700');
+document.head.appendChild(link);
