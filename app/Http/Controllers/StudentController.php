@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Inertia\Inertia;  
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+
+ 
 
 class StudentController extends Controller
 {
@@ -15,6 +20,13 @@ class StudentController extends Controller
     public function index()
     {
         //
+        $DBdata['Students'] = Student::all();
+        //return view('estudiantes.index',$datosDB); 
+        return Inertia::render('Students/Index', [
+            'DBdata' => Student::all()
+        ]);
+
+
     }
 
     /**
@@ -25,6 +37,7 @@ class StudentController extends Controller
     public function create()
     {
         //
+        return Inertia::render('Students/Form',['student' => [] , 'create' => true]);
     }
 
     /**
@@ -35,7 +48,24 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $fullFormData = request();      // I have to use request() cuz data from $request is truncked
+        //dd($fullFormData);
+        
+        $fullFormData->validate([
+            'FirstName' => 'required',
+            'LastName'  => 'required',
+            'ClassName' => 'required',
+            'Telephone' => 'required',
+            'Address'   => 'required',
+        ]);
+
+        if(request()->hasFile('Photo')){
+            $fullFormData['Photo'] = $fullFormData->file('Photo')->store('uploads','public'); // it s the same that store('public/uploads')
+        };
+
+        $student = Student::create($fullFormData->request->all());    // save into DB and create a new student in order to go to the edit page 
+
+        return redirect()->route('students.index');
     }
 
     /**
@@ -58,6 +88,7 @@ class StudentController extends Controller
     public function edit(Student $student)
     {
         //
+        return Inertia::render('Students/Form',['student' => $student, 'create' => false ]);
     }
 
     /**
@@ -70,6 +101,20 @@ class StudentController extends Controller
     public function update(Request $request, Student $student)
     {
         //
+        $request->validate([
+            'FirstName' => 'required',
+            'LastName'  => 'required',
+            'ClassName' => 'required',
+            'Telephone' => 'required',
+            'Address'   => 'required',
+        ]
+        );
+
+        $student->update($request->all());
+
+        return redirect()->route('students.index');
+
+
     }
 
     /**
@@ -81,5 +126,10 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         //
+        //dd($student['Photo']);
+        Storage::delete('public/' . $student['Photo']);
+        $student->delete();
+
+        return Redirect::route('students.index');
     }
 }

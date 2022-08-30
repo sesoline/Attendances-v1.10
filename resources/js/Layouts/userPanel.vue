@@ -53,7 +53,7 @@
                                 </a>
                             </li>
                             <li class="w-full h-full py-3 px-2 border-b border-light-border">
-                                <Link :href="route('students')">
+                                <Link :href="route('students.index')">
                                     <div class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
                                         <i class="fas fa-table float-left mx-2"></i>
                                         Students List
@@ -74,7 +74,7 @@
                     </aside>
                     <!--/Sidebar-->
                     <!--Main-->
-                    <studentForm class="vue"></studentForm>
+                    <slot name="Main"></slot>
 
                     
                     <!--/Main-->
@@ -91,7 +91,6 @@
         </div>
         <!-- <script src="./main.js"></script>         -->
                 
-                
     </div>
 </template>
 <script>
@@ -102,7 +101,7 @@ import studentForm from '@/Components/v-StudentForm.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 
 export default {
-    components: {studentForm, Link},
+    components: {studentForm,Link},
     
 }
 </script>

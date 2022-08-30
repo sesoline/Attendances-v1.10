@@ -37,3 +37,9 @@ Route::middleware([
 Route::get('/test', function () { 
     return Inertia::render('Layout');
             })->name('tester');
+
+Route::get('/test02', function () { 
+    return Inertia::render('test02');
+            })->name('test02');
+
+Route::resource('students', App\Http\Controllers\StudentController::class);

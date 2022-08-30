@@ -25,6 +25,7 @@ createInertiaApp({
 
 InertiaProgress.init({ color: '#4B5563' });
 
+// Template fonts (optional)
 var link = document.createElement('link');
 link.setAttribute('rel', 'stylesheet');
 link.setAttribute('type', 'text/css');

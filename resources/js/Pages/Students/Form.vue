@@ -1,0 +1,128 @@
+<template>
+    <div>
+        <userPanel>
+            <template v-slot:Main>
+                <form @submit.prevent="submit()" enctype="multipart/form-data" >                    
+                    <div class=" place-content-center">
+                        <div class="md:flex md:items-center mb-6">
+                            <label class="block text-gray-500 font-regular md:text-right mb-1 md:mb-0 pr-4" for="Nombres"> First Name: </label>
+                            <input class="bg-grey-200 appearance-none border-1 border-grey-200 rounded w-full py-2 px-4 text-grey-darker leading-tight focus:outline-none focus:bg-white focus:border-purple-light" 
+                                type="text" name="Name" id="Name" v-model="form.FirstName" > 
+                        </div>
+                        
+                        <div class="md:flex md:items-center mb-6">
+                            <label class="block text-gray-500 font-regular md:text-right mb-1 md:mb-0 pr-4" for="PrimerApellido"> LastName: </label>
+                            <input class="bg-grey-200 appearance-none border-1 border-grey-200 rounded w-full py-2 px-4 text-grey-darker leading-tight focus:outline-none focus:bg-white focus:border-purple-light" 
+                                type="text" name="LastName" id="LastName" v-model="(form.LastName)" >
+                        </div>
+                        
+                        <div class="md:flex md:items-center mb-6">
+                            <label class="block text-gray-500 font-regular md:text-right mb-1 md:mb-0 pr-4"  for="Salon"> ClassRoom: </label>
+                            <input class="bg-grey-200 appearance-none border-1 border-grey-200 rounded w-full py-2 px-4 text-grey-darker leading-tight focus:outline-none focus:bg-white focus:border-purple-light" 
+                                type="text" name="ClassName" id="ClassName" v-model="(form.ClassName)" > 
+                        </div>
+                        
+                        <div class="md:flex md:items-center mb-6">    
+                            <label class="block text-gray-500 font-regular md:text-right mb-1 md:mb-0 pr-4"  for="Telefono"> Telefono: </label>
+                            <input class="bg-grey-200 appearance-none border-1 border-grey-200 rounded w-full py-2 px-4 text-grey-darker leading-tight focus:outline-none focus:bg-white focus:border-purple-light" 
+                                type="text" name="Telephone" id="Telephone" v-model="(form.Telephone)" > 
+                        </div>
+                        
+                        <div class="md:flex md:items-center mb-6">
+                            <label class="block text-gray-500 font-regular md:text-right mb-1 md:mb-0 pr-4"  for="Direccion"> Direccion: </label>
+                            <input class="bg-grey-200 appearance-none border-1 border-grey-200 rounded w-full py-2 px-4 text-grey-darker leading-tight focus:outline-none focus:bg-white focus:border-purple-light" 
+                                type="text" name="Address" id="Address" v-model="(form.Address)" > 
+                        </div>
+                        
+                        <div class="md:flex md:items-center mb-6">
+                            <label class="block text-gray-500 font-regular md:text-right mb-1 md:mb-0 pr-4"  for="email"> e-mail: </label>
+                            <input class="block text-gray-500 font-regular md:text-right mb-1 md:mb-0 pr-4"  
+                                type="email" name="email" id="email" v-model="(form.email)" >
+                        </div>
+                        
+                        <div class="md:flex md:items-center mb-6">
+                            <label class="block text-gray-500 font-regular md:text-right mb-1 md:mb-0 pr-4" for="Foto"> Photo: </label>
+                        </div>
+                        
+                        
+                        <div v-if="!create" >
+                            <img src="/images/Juli.png" width="300" alt=""> 
+                            <br>
+                        </div>
+
+                        <input  class="bg-transparent hover:bg-blue-500 text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded" 
+                                type="file" name="Foto" id="Photo" @input="form.Photo = $event.target.files[0]" accept="image/png, image/jpeg" >
+                        <br><br>
+                        
+                        <div class="flex flex-row justify-end">
+                            
+                            <Link class="bg-blue-500 hover:bg-blue-300 text-white font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded" :href="route('students.index')" method="GET" type="button" >
+                                Back
+                            </link>
+                            <input id="subminButton" class="bg-green-500 hover:bg-green-800 text-white font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded" 
+                                type="submit" :value=" create ? 'Create' : 'Update' ">
+                            
+                        </div>  
+                                                                      
+                    </div>
+                </form>
+            </template>
+        </userPanel>
+    </div>
+</template>
+
+<script>
+
+
+
+import userPanel from '@/Layouts/userPanel.vue'
+import { Link } from '@inertiajs/inertia-vue3'
+import { useForm } from '@inertiajs/inertia-vue3'
+
+
+export default {
+    components: {userPanel, Link},
+ 
+    props: {
+        student: Object,
+        create: Boolean,    // If it's true, this will be an created form
+    },
+
+    data() {
+        return {
+            form: {
+                FirstName: null,
+                LastName:null,
+                ClassName:null,
+                Telephone: null,
+                Address: null,
+                Photo: null,
+            },          
+        }
+    },
+
+    created() {    
+        if(!this.create) {
+            this.form = this.student        // If its a create form, the student array will be null        
+        }           
+        
+    },
+
+    methods: {
+        submit() {            
+            if(this.create){
+                // Posting a new Student
+                this.$inertia.post(this.route('students.store'), this.form )
+            } else {                           
+                // Updating a student
+                this.$inertia.put(this.route('students.update',this.student.id),this.form)
+
+            }
+        },
+    },
+    
+   
+}
+
+
+</script>
