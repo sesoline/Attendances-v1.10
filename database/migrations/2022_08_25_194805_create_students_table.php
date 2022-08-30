@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('Telephone');
             $table->string('email');
             $table->string('Address');
-            $table->string('Photo')->default('gato.png')->change();
+            $table->string('Photo');
             $table->string('ClassName');
             $table->timestamps();
         });

@@ -110,7 +110,16 @@ class StudentController extends Controller
         ]
         );
 
-        $student->update($request->all());
+        if(request()->hasFile('Photo')){
+            if($student['Photo']!= 'images/defaultUser.png'){       // Only delete uploaded pics
+                Storage::delete('public/' . $student['Photo']);     // Deleting old photo
+            }
+            
+            $request['Photo'] = $request->file('Photo')->store('uploads','public'); // Saving new pic on server
+        };
+
+        
+        $student->update($request->request->all());
 
         return redirect()->route('students.index');
 

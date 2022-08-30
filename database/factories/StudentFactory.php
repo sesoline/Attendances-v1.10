@@ -23,7 +23,7 @@ class StudentFactory extends Factory
             'Telephone' => $this->faker->phoneNumber(),
             'email'     => $this->faker->unique()->safeEmail(),
             'Address'   => $this->faker->address(),
-            'Photo'     => $this->faker->unique()->url(),
+            //'Photo'     => 'Public/images/defaultUser.png',    // default value It's already set up into the model
             'ClassName' => $this->faker->randomElement(['6a','6b','6c','7a','7b','7c'])
         ];
     }

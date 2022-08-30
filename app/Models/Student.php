@@ -20,6 +20,6 @@ class Student extends Model
     ];
 
     protected $attributes = [
-        'Photo' => 'Juli.png',
+        'Photo' => 'images/defaultUser.png',
     ];
 }

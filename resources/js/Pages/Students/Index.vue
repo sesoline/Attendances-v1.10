@@ -39,7 +39,7 @@
                                             <td class="border px-1 py-1">{{ Student.Telephone}}</td>                                            
                                             <td class="border px-1 py-1">{{ Student.email}}</td>
                                             <td class="border px-1 py-1 ">
-                                                <img class="" :src="'images/Juli.png'" :alt="Student.FirstName" width="30" > 
+                                                <img class="" :src="'storage/'+Student.Photo" :alt="Student.FirstName" width="30" > 
                                             </td>
 
                                             <td class="border px-4 py-2">
