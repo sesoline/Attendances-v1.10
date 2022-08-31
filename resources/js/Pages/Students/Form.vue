@@ -134,7 +134,7 @@ export default {
 
     computed: {
         url() {
-            return window.location.protocol +  '//' +    window.location.host + '/storage/' + this.form.Photo      
+            return window.location.origin + '/storage/' + this.form.Photo      
             }
 
     }

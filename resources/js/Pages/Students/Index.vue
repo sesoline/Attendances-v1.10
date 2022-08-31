@@ -22,24 +22,24 @@
                             <table class="table-fixed">
                                 <thead>
                                 <tr>
-                                    <th class="border w-1/16 px-4 py-2"> No. </th>
-                                    <th class="border w-1/4 px-4 py-2"> Last Name </th>
-                                    <th class="border w-1/4 px-4 py-2"> First Name </th>
-                                    <th class="border w-1/4 px-4 py-2"> Telephone </th>                                
-                                    <th class="border w-1/4 px-4 py-2"> email </th>
-                                    <th class="border w-1/8 px-4 py-2 justify-center"> Foto </th>
-                                    <th class="border w-1/2 px-4 py-2"> Options </th>
+                                    <th class="border w-1/16 px-4 py-2 text-center"> No. </th>
+                                    <th class="border w-1/4 px-4 py-2 text-center"> Last Name </th>
+                                    <th class="border w-1/4 px-4 py-2 text-center"> First Name </th>
+                                    <th class="border w-1/4 px-4 py-2 text-center"> Telephone </th>                                
+                                    <th class="border w-1/4 px-4 py-2 text-center"> email </th>
+                                    <th class="border w-1/8 px-4 py-2 text-center"> Foto </th>
+                                    <th class="border w-1/2 px-4 py-2 text-center"> Options </th>
                                 </tr>
                                 </thead>
                                 <tbody>                                                                        
                                         <tr class="text-sm" v-for="(Student, index) in DBdata" :key="Student.id">
-                                            <td class="border px-1 py-1"> {{index}} </td>  
-                                            <td class="border px-1 py-1">{{ Student.LastName }}</td>                                        
-                                            <td class="border px-1 py-1">{{ Student.FirstName}}</td>
-                                            <td class="border px-1 py-1">{{ Student.Telephone}}</td>                                            
-                                            <td class="border px-1 py-1">{{ Student.email}}</td>
-                                            <td class="border px-1 py-1 ">
-                                                <img class="" :src="'storage/'+Student.Photo" :alt="Student.FirstName" width="30" > 
+                                            <td class="border px-1 py-1 text-center"> {{index}} </td>  
+                                            <td class="border px-1 py-1 text-center">{{ Student.LastName }}</td>                                        
+                                            <td class="border px-1 py-1 text-center">{{ Student.FirstName}}</td>
+                                            <td class="border px-1 py-1 text-center">{{ Student.Telephone}}</td>                                            
+                                            <td class="border px-1 py-1 text-center">{{ Student.email}}</td>
+                                            <td class="border px-1 py-1 place-content-center">
+                                                <img class="mx-auto" :src="'storage/'+Student.Photo" :alt="Student.FirstName" width="30" > 
                                             </td>
 
                                             <td class="border px-4 py-2">

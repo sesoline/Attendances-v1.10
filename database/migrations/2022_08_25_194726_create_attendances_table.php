@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('StudentID');
             $table->string('ClassName');
             $table->boolean('Attended');
-            $table->boolean('excused');
+            $table->boolean('Excused');
             $table->timestamps();
         });
     }

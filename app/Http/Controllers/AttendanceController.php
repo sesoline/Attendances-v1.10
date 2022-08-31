@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\Classroom;
 use Illuminate\Http\Request;
+use Inertia\Inertia;  
 
 class AttendanceController extends Controller
 {
@@ -15,6 +17,9 @@ class AttendanceController extends Controller
     public function index()
     {
         //
+        return Inertia::render('Attendances/Index', [
+            'classrooms' => Classroom::all()
+        ]);
     }
 
     /**
@@ -44,9 +49,20 @@ class AttendanceController extends Controller
      * @param  \App\Models\Attendance  $attendance
      * @return \Illuminate\Http\Response
      */
-    public function show(Attendance $attendance)
+    public function show($id)
     {
         //
+        $data['classrooms'] = Classroom::all(); // take all classroom
+        $data['filteredStudents'] = Attendance::join('students','attendances.StudentID','=','students.id')
+                                            ->select('students.*',Attendance::raw('Count(1) as total_days,  sum(attendances.Attended) as total_Attended, 
+                                            sum(attendances.Excused) as total_Excused'))
+                                            ->groupBy('students.id')
+                                            ->where('students.ClassName','=',$id)
+                                            ->get();
+
+        return Inertia::render('Attendances/Index', $data);
+        
+
     }
 
     /**
