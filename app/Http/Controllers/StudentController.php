@@ -20,8 +20,6 @@ class StudentController extends Controller
     public function index()
     {
         //
-        $DBdata['Students'] = Student::all();
-        //return view('estudiantes.index',$datosDB); 
         return Inertia::render('Students/Index', [
             'DBdata' => Student::all()
         ]);
@@ -134,8 +132,7 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
-        //dd($student['Photo']);
+        //    
         Storage::delete('public/' . $student['Photo']);
         $student->delete();
 

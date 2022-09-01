@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use Illuminate\Http\Request;
+use Inertia\Inertia;  
 
 class ClassroomController extends Controller
 {
@@ -15,6 +16,9 @@ class ClassroomController extends Controller
     public function index()
     {
         //
+        return Inertia::render('Classrooms/Index', [
+            'classrooms' => Classroom::all()
+        ]);
     }
 
     /**
@@ -25,6 +29,8 @@ class ClassroomController extends Controller
     public function create()
     {
         //
+        return Inertia::render('Classrooms/Form',['classroom' => [] , 'create' => true]);
+
     }
 
     /**
@@ -36,6 +42,21 @@ class ClassroomController extends Controller
     public function store(Request $request)
     {
         //
+        $fullFormData = request();      // I have to use request() cuz data from $request is truncked
+        
+        $fullFormData->validate([
+            'ClassName' => 'required',
+            'Details'  => 'required',
+            'Year' => 'required',
+            'Owner' => 'required',
+            'OwnerEmail'   => 'required',
+            'OwnerTel' => 'required',
+            'Active' => 'required',
+        ]);
+
+        Classroom::create($fullFormData->request->all());    // save into DB and create a new student in order to go to the edit page 
+
+        return redirect()->route('classrooms.index');
     }
 
     /**
@@ -58,6 +79,7 @@ class ClassroomController extends Controller
     public function edit(Classroom $classroom)
     {
         //
+        return Inertia::render('Classrooms/Form',['classroom' => $classroom, 'create' => false ]);
     }
 
     /**
@@ -70,6 +92,25 @@ class ClassroomController extends Controller
     public function update(Request $request, Classroom $classroom)
     {
         //
+        $fullFormData = request();      // I have to use request() cuz data from $request is truncked
+        
+        $fullFormData->validate([
+            'ClassName' => 'required',
+            'Details'  => 'required',
+            'Year' => 'required',
+            'Owner' => 'required',
+            'OwnerEmail'   => 'required',
+            'OwnerTel' => 'required',
+            'Active' => 'required',
+        ]);
+
+        Classroom::create($fullFormData->request->all());    // save into DB and create a new student in order to go to the edit page 
+
+        $classroom->update($request->request->all());
+
+        return redirect()->route('classrooms.index');
+
+        
     }
 
     /**
@@ -81,5 +122,9 @@ class ClassroomController extends Controller
     public function destroy(Classroom $classroom)
     {
         //
+
+        $classroom->delete();
+
+        return redirect()->route('classrooms.index');
     }
 }

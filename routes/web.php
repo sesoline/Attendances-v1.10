@@ -44,3 +44,4 @@ Route::get('/test02', function () {
 
 Route::resource('students', App\Http\Controllers\StudentController::class);
 Route::resource('attendances', App\Http\Controllers\AttendanceController::class);
+Route::resource('classrooms', App\Http\Controllers\ClassroomController::class);

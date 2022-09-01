@@ -3,8 +3,8 @@
         <userPanel>
             <template v-slot:Main>
                 <div class="flex-col">
-
-                <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
+                    
+                    <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
                     <!--Horizontal form-->
                     <div class="mb-2 border-solid border-grey-light rounded border shadow-sm w-full md:w-full lg:w-full">
                         <div class="flex flex-row justify-between content-end bg-gray-300 px-2 py-3 border-solid border-gray-400 border-b">
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <!--/Horizontal form-->                    
-                </div>
+                    </div>
                 </div>
             </template>
         </userPanel>
@@ -74,7 +74,7 @@
 <script>
 
 import userPanel from '@/Layouts/userPanel.vue'
-import { Method } from '@inertiajs/inertia';
+
 import { Link } from '@inertiajs/inertia-vue3'
 
 
