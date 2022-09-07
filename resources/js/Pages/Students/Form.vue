@@ -2,7 +2,7 @@
     <div>
         <userPanel>
             <template v-slot:Main>
-                <form @submit.prevent="submit()" enctype="multipart/form-data" >                    
+                <form class="mx-auto p-4" @submit.prevent="submit()" enctype="multipart/form-data" >                    
                     <div class=" place-content-center">
                         <div class="md:flex md:items-center mb-6">
                             <label class="block text-gray-500 font-regular md:text-right mb-1 md:mb-0 pr-4" for="Nombres"> First Name: </label>
@@ -51,14 +51,14 @@
                         </div>
 
                         <input  class="bg-transparent hover:bg-blue-500 text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded" 
-                                type="file" name="Foto" id="Photo" @input="form.Photo = $event.target.files[0]" accept="image/png, image/jpeg" >
+                                type="file" name="Foto" id="Photo" @input="form.Photo = $event.target.files[0]" accept="image/png, image/jpeg" >   <!-- @input is explained into the inertia documentation -->
                         <br><br>
                         
-                        <div class="flex flex-row justify-end">
+                        <div class="flex pb-16 flex-row justify-end">
                             
                             <Link class="bg-blue-500 hover:bg-blue-300 text-white font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded" :href="route('students.index')" method="GET" type="button" >
                                 Back
-                            </link>
+                            </Link>
                             <input id="subminButton" class="bg-green-500 hover:bg-green-800 text-white font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded" 
                                 type="submit" :value=" create ? 'Create' : 'Update' ">
                             
@@ -127,9 +127,6 @@ export default {
             }
         },
 
-        getURL(URL) {
-             
-        },
     },
 
     computed: {

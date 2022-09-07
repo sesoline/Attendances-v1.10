@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('Address');
             $table->string('Photo');
+            $table->longText('FaceDescriptor');
             $table->string('ClassName');
             $table->timestamps();
         });

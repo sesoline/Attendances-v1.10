@@ -9,15 +9,15 @@
                 <header class="bg-nav">
                     <div class="flex justify-between">
                         <div class="p-1 mx-3 inline-flex items-center">
-                            <i class="fas fa-bars pr-2 text-white" onclick="sidebarToggle()"></i>
+                            <i class="fas fa-bars pr-2 text-white" @click="sidebarToggle()"></i>
                             <h1 class="text-white p-2">Attendances</h1>
                         </div>
                         <div class="p-1 flex flex-row items-center">
                             <a href="https://github.com/sesoline" class="text-white p-2 mr-2 no-underline hidden md:block lg:block">Github</a>
 
 
-                            <img onclick="profileToggle()" class="inline-block h-8 w-8 rounded-full" src="https://avatars.githubusercontent.com/u/63259173?v=4" alt="">
-                            <a href="#" onclick="profileToggle()" class="text-white p-2 no-underline hidden md:block lg:block">Andres Munoz</a>
+                            <img @click="profileToggle()" class="inline-block h-8 w-8 rounded-full" src="https://avatars.githubusercontent.com/u/63259173?v=4" alt="">
+                            <a href="#" @click="profileToggle()" class="text-white p-2 no-underline hidden md:block lg:block">Andres Munoz</a>
                             <div id="ProfileDropDown" class="rounded hidden shadow-md bg-white absolute pin-t mt-12 mr-1 pin-r">
                                 <ul class="list-reset">
                                 <li><a href="#" class="no-underline px-4 py-2 block text-black hover:bg-grey-light">My account</a></li>
@@ -33,12 +33,12 @@
 
                 <div class="flex flex-1">
                     <!--Sidebar-->
-                    <aside id="sidebar" class="bg-side-nav w-1/2 md:w-1/6 lg:w-1/6 border-r border-side-nav hidden md:block lg:block">
+                    <aside id="sidebar" class="bg-side-nav md:w-1/6 lg:w-1/6 border-r border-side-nav hidden md:block lg:block">
 
                         <ul class="list-reset flex flex-col">
                             
                             <li class="w-full h-full py-3 px-2 border-b border-light-border">
-                                <Link :href="route('attendances.index')" >
+                                <Link :href="route('photo.index')" >
                                     <div class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
                                         <i class="fab fa-uikit float-left mx-2"></i>
                                         Take Attendance
@@ -99,17 +99,22 @@
 </template>
 <script>
 
-// import "./main.js"
+
+
 
 import studentForm from '@/Components/v-StudentForm.vue';
 import { Link } from '@inertiajs/inertia-vue3';
+import * as mainJS from '@/main.js';
+
 
 export default {
     components: {studentForm,Link},
+    
 
     data() {
         return {
-            
+            sidebar: document.getElementById('sidebar'),
+            profileDropdown: document.getElementById('ProfileDropDown'),            
         }
     },
 
@@ -121,11 +126,28 @@ export default {
                 return ''
             }
         }
+    
     },
+
+    methods: {
+        sidebarToggle() {
+            if (sidebar.style.display === "none") {
+                sidebar.style.display = "block";
+            } else {
+                sidebar.style.display = "none";
+            }
+        },
+
+        profileToggle() {
+            if (profileDropdown.style.display === "none") {
+                profileDropdown.style.display = "block";
+            } else {
+                profileDropdown.style.display = "none";
+            }
+        },
+    }
+
   
-    created() {
-        //console.log(window.location)
-    },  
 }
 
 </script>

@@ -2,7 +2,7 @@
     <div>
         <userPanel>
             <template v-slot:Main>
-                <div class="flex-col">
+                <div class="mx-auto w-full flex-col">
                     
                     <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
                     <!--Horizontal form-->
@@ -45,10 +45,14 @@
                                                 <Link :href="route('classrooms.edit',classroom.id)" method="GET" > 
                                                     Edit 
                                                 </Link>
-                                                    |                    
+                                                    |                   
                                                 <a href="#" @click.prevent="destroy(classroom.id)">
                                                    Delete 
                                                 </a>
+                                                    <br><br>
+                                                <Link  > 
+                                                    Add descriptors 
+                                                </Link>
                                             </td>
                                         </tr>                                                                                                                                       
                                 </tbody>

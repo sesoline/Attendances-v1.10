@@ -21,5 +21,6 @@ class Student extends Model
 
     protected $attributes = [
         'Photo' => 'images/defaultUser.png',
+        'FaceDescriptor' => '',
     ];
 }

@@ -35,7 +35,7 @@ Route::middleware([
 });
 
 Route::get('/test', function () { 
-    return Inertia::render('Layout');
+    return Inertia::render('Classrooms/Index');
             })->name('tester');
 
 Route::get('/test02', function () { 
@@ -45,3 +45,4 @@ Route::get('/test02', function () {
 Route::resource('students', App\Http\Controllers\StudentController::class);
 Route::resource('attendances', App\Http\Controllers\AttendanceController::class);
 Route::resource('classrooms', App\Http\Controllers\ClassroomController::class);
+Route::resource('photo', App\Http\Controllers\PhotoController::class);

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Attendance;
 use App\Models\Classroom;
 use Illuminate\Http\Request;
 use Inertia\Inertia;  
 
-class AttendanceController extends Controller
+class PhotoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +16,7 @@ class AttendanceController extends Controller
     public function index()
     {
         //
-        return Inertia::render('Attendances/Index', [
+        return Inertia::render('Photo/Index', [
             'classrooms' => Classroom::all()
         ]);
     }
@@ -46,32 +45,21 @@ class AttendanceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Attendance  $attendance
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         //
-        $data['classrooms'] = Classroom::all(); // take all classroom
-        $data['filteredStudents'] = Attendance::join('students','attendances.StudentID','=','students.id')
-                                            ->select('students.*',Attendance::raw('Count(1) as total_days,  sum(attendances.Attended) as total_Attended, 
-                                            sum(attendances.Excused) as total_Excused', 'attendances.id'))
-                                            ->groupBy('students.id')
-                                            ->where('attendances.id','=',$id)
-                                            ->get();
-
-        return Inertia::render('Attendances/Index', $data);
-        
-
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Attendance  $attendance
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Attendance $attendance)
+    public function edit($id)
     {
         //
     }
@@ -80,10 +68,10 @@ class AttendanceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Attendance  $attendance
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Attendance $attendance)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -91,10 +79,10 @@ class AttendanceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Attendance  $attendance
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Attendance $attendance)
+    public function destroy($id)
     {
         //
     }

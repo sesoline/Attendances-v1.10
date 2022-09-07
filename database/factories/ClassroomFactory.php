@@ -19,7 +19,7 @@ class ClassroomFactory extends Factory
         return [
             //
             'ClassName' => $this->faker->unique()->randomElement(['6a','6b','6c','7a','7b','7c']),
-            'Details'   => $this->faker->paragraph(),
+            'Details'   => $this->faker->paragraph(1),
             'Year'      => $this->faker->numberBetween(2017,2022),
             'Owner'     => $this->faker->name(),
             'OwnerEmail'=> $this->faker->email(),
