@@ -104,7 +104,7 @@
 
 import studentForm from '@/Components/v-StudentForm.vue';
 import { Link } from '@inertiajs/inertia-vue3';
-import * as mainJS from '@/main.js';
+//import * as mainJS from '@/main.js';
 
 
 export default {

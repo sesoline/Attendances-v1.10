@@ -43,7 +43,7 @@
                                             </td>
 
                                             <td class="border px-4 py-2">
-                                                <a data-modal="centeredFormModal" class="modal-trigger" href="#" @click.prevent="editStudent(Student)" >
+                                                <a data-modal="centeredFormModal" class="modal-trigger" href="#" @click="editStudent(Student)" >
                                                     Edit
                                                 </a>
                                                     | 
@@ -161,13 +161,15 @@ import userPanel from '@/Layouts/userPanel.vue'
 
 import { Link } from '@inertiajs/inertia-vue3'
 
+import '@/main.js'
+
 
 export default {
     components: {userPanel, Link},
 
     props: {
         students: Array,
-        student: Object,
+        //student: Object,
         
     },
 
@@ -183,12 +185,6 @@ export default {
             },  
             create: true,        
         }
-    },
-
-    created() {    
-        // if(!this.create) {
-        //     this.form = this.student        // If its a create form, the student array will be null        
-        // }                  
     },
 
     computed: {
@@ -258,11 +254,13 @@ export default {
                 }                
             });
         },
+        
     },
 
     
 
     mounted() {
+        
         // Check if there is modals on the page
         if (document.querySelector('.modal-wrapper'))
         {
@@ -275,12 +273,26 @@ export default {
             document.querySelectorAll('.close-modal').forEach(btn => {
                 this.toggleModal('remove', btn);
             });
-        }
+        } 
+        
+    },
 
-        // if(!this.create) {
-        //     this.form = this.student        // If its a create form, the student array will be null        
-        // }      
-
+    updated() {
+        
+        // Check if there is modals on the page
+        if (document.querySelector('.modal-wrapper'))
+        {
+            // Open the modal
+            document.querySelectorAll('.modal-trigger').forEach(btn => {
+                this.toggleModal('add', btn);
+            });
+            
+            // close the modal
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                this.toggleModal('remove', btn);
+            });
+        } 
+        
     },
     
 }
