@@ -1,0 +1,7 @@
+./vendor/bin/sail php artisan route:list
+php artisan migrate:refresh --seed
+
+
+SQL (Get attendances list)
+select S.FirstName, S.LastName, S.ClassName,  count(1) as total_days, sum(A.Attended) as total_asistencias, sum(A.Excused) as total_Excused 
+from attendances A left join students S on S.id = A.StudentID group by S.FirstName, S.LastName, S.ClassName  

@@ -3,14 +3,14 @@
         <div class="" id="main__main-container">
 
             <canvas v-show="false" id="canvasVideo" width="0" height="0"></canvas>
-            <video id="streamingVideo" playsinline autoplay loop>Can't load video :(</video>
-            
+            <video v-show="videShow" id="streamingVideo" playsinline autoplay loop>Can't load video :(</video>
+            <img id="photo" alt="The screen capture will appear in this box."> 
             <div class="mx-auto m-2 w-28 bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full text-center"
             id="stopButton">{{recordButton}}</div>
             
             <textarea class="block mx-auto m-2 " v-if="errorMsg" v-model="errorMsg"></textarea>
 
-            <img id="photo" alt="The screen capture will appear in this box."> 
+            
 
         </div>
         
@@ -27,6 +27,7 @@ export default {
     data() {
         return {
             errorMsg: '',
+            videShow: true,
             recordButton: 'Record',
             //canvads: null,
         }
@@ -72,10 +73,10 @@ export default {
 //////////////////////////////___________________________//////////////////////////////
 
         // Action Button
-        videoButton.onclick = () => {            
+        videoButton.onclick = () => {   
+            this.videShow = false         
             takepicture()
-            
-            
+                
             //startRecording();
             //setTimeout(() => { mediaRecorder.stop(); }, 3000)           // Save 3 seconds of video 
             
