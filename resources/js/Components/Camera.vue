@@ -2,15 +2,16 @@
     <div>
         <div class="" id="main__main-container">
 
-            <canvas v-show="false" id="canvasVideo" width="0" height="0"></canvas>
+            <canvas v-show="false" id="myCanvas" width="0" height="0"></canvas>
             <video v-show="videShow" id="streamingVideo" playsinline autoplay loop>Can't load video :(</video>
-            <img id="photo" alt="The screen capture will appear in this box."> 
+            <img v-show="imgShow" id="photo" alt="The screen capture will appear in this box."> 
             <div class="mx-auto m-2 w-28 bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full text-center"
-            id="stopButton">{{recordButton}}</div>
+            id="takeButton">{{recordButton}}</div>
+            <div v-show="continueShow" class="mx-auto m-2 w-28 bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-full text-center"
+            id="continueButton">Continue</div>
             
             <textarea class="block mx-auto m-2 " v-if="errorMsg" v-model="errorMsg"></textarea>
 
-            
 
         </div>
         
@@ -27,18 +28,21 @@ export default {
     data() {
         return {
             errorMsg: '',
+            imgShow: false,
+            continueShow: false,
             videShow: true,
-            recordButton: 'Record',
+            recordButton: 'Take',
             //canvads: null,
         }
     },
 
     mounted() {
 
-        var videoButton = document.getElementById('stopButton')
+        var takeButton = document.getElementById('takeButton')
+        var continueButton = document.getElementById('continueButton')
         var video = document.getElementById('streamingVideo') 
         var photo = document.getElementById('photo') 
-        var canvas = document.getElementById('canvasVideo')                               
+        var canvas = document.getElementById('myCanvas')                               
 
         let mediaRecorder;
 
@@ -70,16 +74,30 @@ export default {
             video.srcObject = stream;       //  It means the live camera is gonna be showed on videoCanvas
         }
 
-//////////////////////////////___________________________//////////////////////////////
+//////////////////////////////__________  On clicks_________________//////////////////////////////
 
         // Action Button
-        videoButton.onclick = () => {   
-            this.videShow = false         
-            takepicture()
+        takeButton.onclick = () => {   
+            if(!this.imgShow){
+                this.videShow = false 
+                this.recordButton  = "Re-take"
+                this.imgShow = true  
+                this,this.continueShow = true   
+                takepicture()
+            } else {
+                this.imgShow=false
+                this.videShow=true
+                this.recordButton  = "take"
+            }
+            
                 
             //startRecording();
             //setTimeout(() => { mediaRecorder.stop(); }, 3000)           // Save 3 seconds of video 
             
+        }
+
+        continueButton.onclick = () => {
+            faceID()
         }
 
 //////////////////////////////___________________________//////////////////////////////
@@ -88,20 +106,57 @@ export default {
             console.log(canvas)
             var context = canvas.getContext('2d');
             
-                canvas.width = stream.getVideoTracks()[0].getSettings().width;
-                canvas.height = stream.getVideoTracks()[0].getSettings().height;
-                //console.log(x,y)
+            canvas.width = stream.getVideoTracks()[0].getSettings().width;
+            canvas.height = stream.getVideoTracks()[0].getSettings().height;
+            //console.log(x,y)
                 
-                context.drawImage(video, 0, 0, canvas.width , canvas.height);
+            context.drawImage(video, 0, 0, canvas.width , canvas.height);
             
-                var data = canvas.toDataURL('image/png');
-                console.log(data)
-                photo.setAttribute('src', data);
+            var data = canvas.toDataURL('image/png');
+            console.log(data)
+            photo.setAttribute('src', data);
+
+            //FaceID recognition
+            
+
            
         }
 
+//////////////////////////////____________  FACEID API  _______________//////////////////////////////
 
-//////////////////////////////___________________________//////////////////////////////
+        async function faceID() {
+
+            // Loading libraries
+            await faceapi.nets.ssdMobilenetv1.loadFromUri('../weights')
+            await faceapi.nets.faceLandmark68TinyNet.loadFromUri('../weights')
+            await faceapi.nets.faceLandmark68Net.loadFromUri('../weights')
+            await faceapi.nets.faceRecognitionNet.loadFromUri('../weights')
+
+            // Save the classrooms descriptors in a vector
+
+
+            // // Compare faces            
+            // let input = "myCanvas"
+            // let inputDescriptors = await faceapi.detectAllFaces(input).withFaceLandmarks().withFaceDescriptors()
+            // inputDescriptors.forEach(e => {
+
+                
+            //});
+
+
+
+
+            
+
+
+
+
+
+
+        }
+
+
+//////////////////////////////____________  VIDEO RECORDING _______________//////////////////////////////
 
         // Recrding functions
         function startRecording() {

@@ -23,4 +23,9 @@ class Student extends Model
         'Photo' => 'images/defaultUser.png',
         'FaceDescriptor' => '',
     ];
+
+    protected function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
+    }
 }

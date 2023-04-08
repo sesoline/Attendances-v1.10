@@ -25,3 +25,19 @@ run `./vendor/bin/sail npm i` <br/>
 run `./vendor/bin/sail npm run dev` <br/>
 
 visit `localhost
+
+
+-- To do List
+
+Create new table student_classrooms
+create new table institutions
+delete className column in students
+create classroom_id column in students, so update factories
+
+update models controller and views after theses changes
+
+finally, continue working with 'add descriptors' option into clasroom view
+- take descriptor using the photo of the student
+- asign descriptor to each student
+- give an option to add new descriptors to students without photo
+

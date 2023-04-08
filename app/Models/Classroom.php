@@ -19,4 +19,10 @@ class Classroom extends Model
         'Active',
     ];
 
+
+    protected function students()
+    {
+        return $this->hasMany(Student::class, "ClassName" , "ClassName");
+    }
+
 }

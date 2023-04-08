@@ -77,12 +77,13 @@
 
                     </aside>
                     <!--/Sidebar-->
-                    <!--Main-->
-                    <slot name="Main"></slot>
-
                     
-                    <!--/Main-->
+                <!--Main-->
+                    <slot name="Main"></slot>    
+                <!--/Main-->
+
                 </div>
+                
                 <!--Footer-->
                 <footer class="bg-grey-darkest text-white p-2">
                     <div class="flex flex-1 mx-auto">&copy; Attendances </div>
