@@ -1,5 +1,8 @@
 ./vendor/bin/sail php artisan route:list
 php artisan migrate:refresh --seed
+vendor/bin/sail artisan make:model myModel -mcr
+
+php artisan make:factory PostFactory <- para hacer un archivo factory
 
 
 SQL (Get attendances list)

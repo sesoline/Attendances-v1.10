@@ -118,15 +118,20 @@
                                                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500"
                                                 id="email" type="email" name="email" required placeholder="example@example.com" v-model="form.email">                                            
                                         </div>
-                                        <div class="w-full md:w-1/2 px-3">
+                                        <!-- <div class="w-full md:w-1/2 px-3">
                                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-last-name">
                                                 Classrooms
                                             </label>
-                                            <input
-                                                class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                                id="Classrooms" type="Classrooms" placeholder="Classrooms" v-model="form.ClassName" >
-                                        </div>
+                                            <div class="relative">
+                                                <select  class="block appearance-none w-full bg-grey-200 border border-grey-200 text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-state">
+                                                    <option v-for="e, index in form.StudentClassrooms" :value="e" :key="e" >{{form.StudentClassrooms[index]}}</option>                                                    
+                                                </select>                
+                                            </div>                                          
+                                        </div> -->
                                     </div>
+                                    <addClassroom   class="py-4" modal="" v-bind:classrooms="classrooms"
+                                                    v-bind:student_classrooms="form.StudentClassrooms" > 
+                                    </addClassroom>   
                                     <div class="flex flex-wrap -mx-3 mb-6">
                                         <div class="w-full px-3">
                                             <div v-if="!create" >
@@ -158,6 +163,7 @@
 <script>
 
 import userPanel from '@/Layouts/userPanel.vue'
+import addClassroom from '@/Components/addClassroom.vue'
 
 import { Link } from '@inertiajs/inertia-vue3'
 
@@ -165,12 +171,12 @@ import '@/main.js'
 
 
 export default {
-    components: {userPanel, Link},
+    components: {userPanel, Link, addClassroom},
 
     props: {
         students: Array,
-        //student: Object,
-        
+        classrooms:Array,
+        student_classrooms: Array,      
     },
 
     data() {
@@ -178,7 +184,7 @@ export default {
             form: {
                 FirstName: null,
                 LastName:null,
-                ClassName:null,
+                StudentClassrooms:null,
                 Telephone: null,
                 Address: null,
                 Photo: null,            
@@ -201,7 +207,7 @@ export default {
             this.form = {
                 FirstName: null,
                 LastName:null,
-                ClassName:null,
+                //ClassName:null,
                 Telephone: null,
                 Address: null,
                 Photo: null,            
@@ -210,8 +216,15 @@ export default {
         },
         
         editStudent(student) {
-            this.form = student             
+            
             this.create = false
+            this.form = student
+            this.form.StudentClassrooms = [] 
+
+            // I had to use JSON cuz the filter method leave me a proxy array that insert errors on vuejs
+            this.form.StudentClassrooms  = JSON.parse(JSON.stringify(this.student_classrooms.filter(e => e.id == student.id)))
+
+           
         },
         
         submit() {     
@@ -225,11 +238,17 @@ export default {
                 
             } else {                           
                 // Updating a student
-                
-                console.log(Object.assign({'_method': '_put'},this.form))
+           
+                // It will be making a put to theserver using post
 
-                this.$inertia.post(this.route('students.update',this.form.id),
-                Object.assign({'_method': 'put'},this.form))
+                console.log(this.form.StudentClassrooms,'guardado')
+                this.$inertia.post(this.route('students.update',this.form.id), Object.assign({'_method': 'put'},this.form)) 
+                 //   However, you can also use this:
+                 // 
+                 //         this.$inertia.put(this.route('students.update',this.form.id),this.form)
+                 //
+
+
 
             }
         },

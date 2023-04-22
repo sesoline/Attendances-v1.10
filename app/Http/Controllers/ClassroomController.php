@@ -93,18 +93,17 @@ class ClassroomController extends Controller
     {
         //
         $fullFormData = request();      // I have to use request() cuz data from $request is truncked
-        
+        //dd($classroom);
         $fullFormData->validate([
-            'ClassName' => 'required',
-            'Details'  => 'required',
-            'Year' => 'required',
-            'Owner' => 'required',
-            'OwnerEmail'   => 'required',
-            'OwnerTel' => 'required',
-            'Active' => 'required',
+            'ClassName'     => 'required',
+            'Details'       => 'required',
+            'Year'          => 'required',
+            'Owner'         => 'required',
+            'OwnerEmail'    => 'required',
+            'OwnerTel'      => 'required',
+            'Active'        => 'required',
+            'Institution_id'=> 'required',
         ]);
-
-        Classroom::create($fullFormData->request->all());    // save into DB and create a new student in order to go to the edit page 
 
         $classroom->update($request->request->all());
 

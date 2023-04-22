@@ -24,15 +24,18 @@ run `./vendor/bin/sail php artisan migrate` <br/>
 run `./vendor/bin/sail npm i` <br/>
 run `./vendor/bin/sail npm run dev` <br/>
 
+
+run php artisan storage:link to read images
+
 visit `localhost
 
 
 -- To do List
 
-Create new table student_classrooms
-create new table institutions
-delete className column in students
-create classroom_id column in students, so update factories
+- hacer un componente para agregar salones a un estudiante
+- Classroom view has to have the option to add students in every classroom
+- Students has to show wich clases belong to in the option edit into the students view
+
 
 update models controller and views after theses changes
 
@@ -40,4 +43,15 @@ finally, continue working with 'add descriptors' option into clasroom view
 - take descriptor using the photo of the student
 - asign descriptor to each student
 - give an option to add new descriptors to students without photo
+
+bug
+- salon repetido no borra el search box
+
+Questions
+- Is it bad idea delete registers to save the save ones? (classrooms controller update student_classrooms)
+
+
+
+
+
 

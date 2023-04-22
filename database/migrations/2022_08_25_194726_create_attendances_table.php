@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->date('Date');
-            $table->integer('StudentID');
-            $table->string('ClassName');
+            $table->integer('Student_id');
+            $table->string('Classroom_id');
             $table->boolean('Attended');
             $table->boolean('Excused');
             $table->timestamps();

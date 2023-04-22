@@ -54,8 +54,9 @@ export default {
     methods: {
 
         showTable() {       
-            // Go to attenances/className to get attendance list of className selected
-            this.$inertia.get(window.location.origin + '/attendances/'+this.classrooms[document.getElementById("SalonSelect").value-1].ClassName,{},{ preserveState: true })
+            // Go to attenances/classroom.id to get attendance list of classroom selected
+            console.log('perro', this.classrooms[document.getElementById("SalonSelect").value-1])
+            this.$inertia.get(window.location.origin + '/attendances/'+this.classrooms[document.getElementById("SalonSelect").value-1].id,{},{ preserveState: true })
         },
     },
     

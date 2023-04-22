@@ -18,13 +18,15 @@ class ClassroomFactory extends Factory
     {
         return [
             //
-            'ClassName' => $this->faker->unique()->randomElement(['6a','6b','6c','7a','7b','7c']),
+            'ClassName' => $this->faker->unique()->randomElement(['Maths-3455','Biology-4284','Arts-5354','English-7000','History-9090','Tec-2001']),
             'Details'   => $this->faker->paragraph(1),
             'Year'      => $this->faker->numberBetween(2017,2022),
             'Owner'     => $this->faker->name(),
             'OwnerEmail'=> $this->faker->email(),
             'OwnerTel'  => $this->faker->phoneNumber(),
-            'Active'    => $this->faker->boolean()
+            'Active'    => $this->faker->boolean(),
+
+            'Institution_id' => $this->faker->randomElement(['1']),
         ];
     }
 }

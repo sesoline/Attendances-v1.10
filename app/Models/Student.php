@@ -17,6 +17,7 @@ class Student extends Model
         'Address',
         'Photo',
         'ClassName',
+        'Institution_id',
     ];
 
     protected $attributes = [
@@ -24,8 +25,8 @@ class Student extends Model
         'FaceDescriptor' => '',
     ];
 
-    protected function classroom()
+    protected function classrooms()
     {
-        return $this->belongsTo(Classroom::class);
+        return $this->hasmany(Student_classroom::class);
     }
 }

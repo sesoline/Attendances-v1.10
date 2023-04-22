@@ -189,90 +189,7 @@
 
 
                                 </div>
-                                
-
-
-
-
-                                <!-- <form id='form_id' @submit.prevent="submit()" class="w-full">
-                                                <div class="flex flex-wrap -mx-3 mb-6">
-                                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-first-name">
-                                                            ClassName
-                                                        </label>
-                                                        <input
-                                                            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500"
-                                                            id="ClassName" type="text" name="ClassName" required placeholder="ClassName" v-model="form.ClassName">                                            
-                                                    </div>
-                                                    <div class="w-full md:w-1/2 px-3">
-                                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-last-name">
-                                                            Year
-                                                        </label>
-                                                        <input
-                                                            class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                                            id="Year" type="text" placeholder="Year" v-model="form.Year" >
-                                                    </div>
-                                                </div>
-                                                <div class="flex flex-wrap -mx-3 mb-6">
-                                                    <div class="w-full px-3">
-                                                        <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1" for="grid-password">
-                                                            Details
-                                                        </label>
-                                                        <input class="appearance-none block w-full bg-gray-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey" 
-                                                        id="grid-password" type="Details" placeholder="Details" v-model="form.Details">                                                        
-                                                    </div>
-                                                </div>                                                
-                                                <div class="flex flex-wrap -mx-3 mb-6">
-                                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-first-name">
-                                                            Owner
-                                                        </label>
-                                                        <input
-                                                            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500"
-                                                            id="Owner" type="text" name="Owner" required placeholder="Owner" v-model="form.Owner">                                            
-                                                    </div>
-                                                    <div class="w-full md:w-1/2 px-3">
-                                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-last-name">
-                                                            Owner's Email
-                                                        </label>
-                                                        <input
-                                                            class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                                            id="OwnerEmail" type="email" placeholder="OwnerEmail" v-model="form.OwnerEmail" required>
-                                                    </div>
-                                                </div>
-                                                <div class="flex flex-wrap -mx-3 mb-6">
-                                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-first-name">
-                                                            Owner's Telephone
-                                                        </label>
-                                                        <input
-                                                            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500"
-                                                            id="OwnerTel" type="OwnerTel" name="OwnerTel" placeholder="Owner Telphone" v-model="form.OwnerTel" required>                                            
-                                                    </div>
-                                                    <div class="w-full md:w-1/2 px-3">
-                                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-last-name">
-                                                            Is it Active?
-                                                        </label>
-                                                        <select
-                                                            class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                                            id="Active" type="Active" v-model="form.Active" required>
-                                                            <option value="1">True</option>
-                                                            <option value="0">False</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="flex flex-wrap -mx-3 mb-6">
-                                                    
-                                                </div>                                    
-
-                                                <div class="mt-5">
-                                                    <input  id="submidButton" class='bg-green-500 close-modal hover:bg-green-800 text-white font-bold mr-2 py-2 px-4 rounded' 
-                                                            type="submit" :value=" create ? 'Create' : 'Update' ">                                        
-                                                    <span class='close-modal cursor-pointer bg-red-200 hover:bg-red-500 text-red-900 font-bold py-2 px-4 rounded' >
-                                                        Close
-                                                    </span>
-                                                </div>
-                                </form> -->
+                            
                             </div>
                         </div>
                     </div>
@@ -305,7 +222,8 @@ export default {
                 Owner: null,
                 OwnerEmail: null,
                 OwnerTel: null,  
-                Active: 1,          
+                Active: 1,
+                Institution_id: '1',          
             },
             create: true,  
                     
@@ -323,7 +241,8 @@ export default {
                 Owner: null,
                 OwnerEmail: null,
                 OwnerTel: null,  
-                Active: '',          
+                Active: '', 
+                Institution_id: '1',         
             }  
         },
 
@@ -362,7 +281,7 @@ export default {
                     let modal_id = this.dataset.modal;
                     document.getElementById(`${modal_id}`).classList.add('modal-is-open');
                 } else {
-                    // Automaticlly get the opned modal ID
+                    // Automaticlly get the opened modal ID
                     let modal_id = elem_trigger.closest('.modal-wrapper').getAttribute('id');
                     document.getElementById(`${modal_id}`).classList.remove('modal-is-open');
                 }                

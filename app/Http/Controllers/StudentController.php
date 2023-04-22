@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\Classroom;
+use App\Models\Student_classroom;
 use Illuminate\Http\Request;
 use Inertia\Inertia;  
 use Illuminate\Support\Facades\Redirect;
@@ -20,7 +22,26 @@ class StudentController extends Controller
     public function index()
     {
         //
-        return Inertia::render('Students/Index',['students' => Student::all() ]);
+        
+        // query-> select s.FirstName, c.ClassName from student_classrooms SC left join classrooms c on SC.classroom_id = c.id 
+        // LEFT JOIN students s on SC.student_id = s.id
+
+
+        // Classrooms
+        $data['classrooms'] = Classroom::all();
+
+
+        // Student's classrooms
+        $data['student_classroom'] = Student_classroom::join('classrooms','student_classrooms.classroom_id','=','classrooms.id')
+                                ->join('students','student_classrooms.student_id','=','students.id')
+                                ->select('students.id','classrooms.id as classroom_id','classrooms.ClassName')
+                                ->get();
+
+        return Inertia::render('Students/Index',[
+            'students' => Student::all(),
+            'classrooms' => $data['classrooms'],
+            'student_classrooms' => $data['student_classroom'] 
+            ]);
 
 
     }
@@ -94,18 +115,17 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, Student $student, Student_classroom $Student_classroom)
     {
-        //
+        
         $request->validate([
             'FirstName' => 'required',
             'LastName'  => 'required',
-            'ClassName' => 'required',
             'Telephone' => 'required',
-            'Address'   => 'required',
+            'Address'   => 'required',            
         ]
         );
-
+     
         if(request()->hasFile('Photo')){
             if($student['Photo']!= 'images/defaultUser.png'){       // Only delete uploaded pics
                 Storage::delete('public/' . $student['Photo']);     // Deleting old photo
@@ -113,9 +133,22 @@ class StudentController extends Controller
             
             $request['Photo'] = $request->file('Photo')->store('uploads','public'); // Saving new pic on server
         };
-
         
         $student->update($request->request->all());
+
+
+        ///// SAVING STUDENT'S CLASSROOMS IN DB
+
+        // Delete old classrooms registers
+        Student_classroom::where('student_id',$student['id'])->delete();
+
+        // Updating new classrooms
+        foreach($request['StudentClassrooms'] as $element){             // to avoid forLoop -> Student_classroom::createMany()    
+            Student_classroom::create([
+                    'student_id'=>$student['id'],
+                    'classroom_id'=>$element['classroom_id']
+            ]);
+        };
 
         return redirect()->route('students.index');
 
@@ -131,7 +164,8 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         //    
-        Storage::delete('public/' . $student['Photo']);
+        dd($student);
+        Storage::delete('public/' . $student['Photo']);     // delete the photo file saved previously in the server
         $student->delete();
 
         return Redirect::route('students.index');

@@ -17,14 +17,14 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
-            //
+            // Factory all fields except photo and descriptiors ones.
             'FirstName' => $this->faker->firstName(),
             'LastName'  => $this->faker->lastName(),
             'Telephone' => $this->faker->phoneNumber(),
             'email'     => $this->faker->unique()->safeEmail(),
             'Address'   => $this->faker->address(),
-            //'Photo'     => 'Public/images/defaultUser.png',    // default value It's already set up into the model
-            'ClassName' => $this->faker->randomElement(['6a','6b','6c','7a','7b','7c'])
+
+            'Institution_id' => $this->faker->randomElement(['1']),
         ];
     }
 }

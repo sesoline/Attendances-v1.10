@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendance;
 use App\Models\Classroom;
+use App\Models\Student_classroom;
 use Illuminate\Http\Request;
 use Inertia\Inertia;  
 
@@ -57,11 +58,11 @@ class AttendanceController extends Controller
         // original SQL query:
         //              select S.*,  count(1) as total_days, sum(A.Attended) as total_asistencias, sum(A.Excused) as total_Excused from attendances A left join students S on S.id = A.StudentID WHERE S.ClassName = '7c' group by S.id 
 
-        $data['filteredStudents'] = Attendance::join('students','attendances.StudentID','=','students.id')
+        $data['filteredStudents'] = Attendance::join('students','attendances.Student_id','=','students.id')
                                             ->select('students.*',Attendance::raw('Count(1) as total_days,  sum(attendances.Attended) as total_Attended, 
                                             sum(attendances.Excused) as total_Excused', 'attendances.id'))
                                             ->groupBy('students.id')
-                                            ->where('students.className','=',$id)
+                                            ->where('attendances.classroom_id','=',$id)
                                             ->get();
         
         return Inertia::render('Attendances/Index', $data);

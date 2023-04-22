@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('Address');
             $table->string('Photo');
             $table->longText('FaceDescriptor');
-            $table->string('ClassName');
+            $table->string('Institution_id');
+            //$table->string('student_classroom_id');
             $table->timestamps();
         });
     }

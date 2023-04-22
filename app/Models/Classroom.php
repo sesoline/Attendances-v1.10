@@ -17,6 +17,7 @@ class Classroom extends Model
         'OwnerEmail',
         'OwnerTel',
         'Active',
+        'Institution_id',
     ];
 
 

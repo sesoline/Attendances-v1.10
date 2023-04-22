@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Team;
 use App\Models\Classroom;
 use App\Models\Student;
+use App\Models\Institution;
+use App\Models\Student_classroom;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,9 +28,15 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         User::factory(12)->create();
+        Institution::factory(2)->create();
         Classroom::factory(4)->create();
         Student::factory(30)->create();
+        Student_classroom::factory(16)->create();
+
         Attendance::factory(500)->create();
+
+
         Team::factory(3)->create();
+
     }
 }
