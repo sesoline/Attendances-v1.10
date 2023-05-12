@@ -8,3 +8,17 @@ php artisan make:factory PostFactory <- para hacer un archivo factory
 SQL (Get attendances list)
 select S.FirstName, S.LastName, S.ClassName,  count(1) as total_days, sum(A.Attended) as total_asistencias, sum(A.Excused) as total_Excused 
 from attendances A left join students S on S.id = A.StudentID group by S.FirstName, S.LastName, S.ClassName  
+
+|||| CREAR RUTAS ||||
+
+// 1ra forma de usar sin usar el controllador para llamar vistas
+/*
+Route::get('/estudiantes', function () {
+    return view('estudiantes.index');
+});
+*/
+
+// 2d forma de usar controllador... Aqui debemos crear el return en el controlador
+/*
+Route::get('/estudiantes', 'App\Http\Controllers\EstudiantesController@index');  //porque no me deja usar solo EstudiantesController@index
+*/

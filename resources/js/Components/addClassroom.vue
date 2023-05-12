@@ -79,7 +79,7 @@ export default {
 
         addClassroom() {
         
-            let newClass = true 
+            let isNew = true 
 
             // Read selected classroom form datalist
             let selectClassroom = document.getElementById('addClassroom').value
@@ -87,15 +87,15 @@ export default {
             // Check if classroom was already taken
             this.student_classrooms.forEach(e => {
                 if (e.ClassName == selectClassroom) {
-                    newClass = false
+                    isNew = false
                     console.log("Classroom already selected")
                     alert('Classroom already selected') 
                     //this.modal = ''           // error: props are readonly                            
                 }
             })
 
-            // Adding classroom 
-            if (newClass){
+            // Adding new classroom 
+            if (isNew){
                 let idClassroom = document.getElementById('optionCR-'+selectClassroom).dataset.id
                 //console.log(this.student_classrooms,'before')
                 this.student_classrooms.push({id:null,  classroom_id:idClassroom, ClassName:selectClassroom}) 

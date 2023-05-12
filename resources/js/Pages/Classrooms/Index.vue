@@ -43,15 +43,19 @@
                                                 <td class="border px-1 py-1 text-center">{{ classroom.Active}}</td>                                                                              
                                                 <td class="border px-4 py-2 text-center">
                                                     <a data-modal="centeredFormModal" class="modal-trigger" href="#" @click="editClassroom(classroom)" >
-                                                    Edit
+                                                        Editar
                                                     </a>
                                                         <br><br>                  
                                                     <a href="#" @click.prevent="destroy(classroom.id)">
-                                                    Delete 
+                                                        Delete 
                                                     </a>
                                                         <br><br>
-                                                    <a data-modal="modalDescriptors" class="modal-trigger" href="#"  > 
+                                                    <a data-modal="centeredFormModal" class="modal-trigger" href="#" @click="{modalState='addDescriptorsModal'; classroomID=classroom.id}" > 
                                                         Descriptors 
+                                                    </a>
+                                                        <br><br>
+                                                    <a data-modal="centeredFormModal" class="modal-trigger" href="#" @click="editMembers(classroom.id)" >
+                                                        Members
                                                     </a>
                                                 </td>
                                             </tr>                                                                                                                                       
@@ -61,20 +65,18 @@
                         </div>
                         <!--/Horizontal form-->                    
                     </div>
-                    <!-- Centered With a Form Modal -->
-                    <div id='centeredFormModal' class="modal-wrapper">
-                        <div class="overlay close-modal"></div>
-                        <div class="modal modal-centered">
-                            <div class="modal-content shadow-lg p-5">
-                                <div class="border-b p-2 pb-3 pt-0 mb-4">
-                                <div class="flex justify-between items-center">
-                                        Classroom
-                                        <span class='close-modal cursor-pointer px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200'>
-                                            <i class="fas fa-times text-gray-700"></i>
-                                        </span>
-                                </div>
-                                </div>                    
-                                <!-- Modal content -->
+
+
+                    <modalCentered>
+
+                        <template v-slot:title>
+                            <div v-if="modalState=='editModal'">CLASSROOM DETAILS</div>
+                            <div v-if="modalState=='addDescriptorsModal'">GENERATE AUTOMATIC DESCRIPTORS</div>
+                            <div v-if="modalState=='addStudentsModal'">MEMBERS</div>
+                        </template>
+                        <template v-slot:content>
+                            <!-- CLASSROOM DETAILS -->
+                            <div v-if="modalState=='editModal'">
                                 <form id='form_id' @submit.prevent="submit()" class="w-full">
                                                 <div class="flex flex-wrap -mx-3 mb-6">
                                                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -155,24 +157,11 @@
                                                 </div>
                                 </form>
                             </div>
-                        </div>
-                    </div>
-                    <!-- Centered With a Form Modal -->
-                    <div id='modalDescriptors' class="modal-wrapper">
-                        <div class="overlay close-modal"></div>
-                        <div class="modal modal-centered">
-                            <div class="modal-content shadow-lg p-5">
-                                <div class="border-b p-2 pb-3 pt-0 mb-4">
-                                <div class="flex justify-between items-center">
-                                        GENERATE AUTOMATIC DESCRIPTORS
-                                        <span class='close-modal cursor-pointer px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200'>
-                                            <i class="fas fa-times text-gray-700"></i>
-                                        </span>
-                                </div>
-                                </div>                    
-                                <!-- Modal content -->
+
+                            <!-- ADD DESCRIPTORS -->
+                            <div v-if="modalState=='addDescriptorsModal'">
                                 <div class="flex justify-center flex-wrap -mx-3 mb-6">
-                                    <form id='form_id' @submit.prevent="submitDescriptors()" class="flex justify-center flex-wrap">
+                                    <form id='form_id' @submit.prevent="generateDescriptors()" class="flex justify-center flex-wrap">
                                         <input  id="genDescriptorsBtn" data-modal="centeredFormModal"   
                                                 class='modal-trigger w-fit bg-green-500 text-center close-modal 
                                                 hover:bg-green-800 text-white font-bold mr-2 py-2 px-4 rounded' 
@@ -183,16 +172,35 @@
                                             <br> 
                                             This action will delete all previous classroom descriptors 
                                         </label>
-                                    </form>
-                                            
-                                    
-
-
+                                    </form>                                                                    
                                 </div>
-                            
                             </div>
-                        </div>
-                    </div>
+
+                            <!-- ADD STUDENTS -->
+                            <div v-if="modalState=='addStudentsModal'">
+                                <div class="content-center">
+                                    <addStudents class="mb-4" modal="" v-bind:ClassroomStudents="ClassroomStudents" v-bind:students="students">
+
+                                    </addStudents>
+                                    <div class="flex items-center justify-end gap-2 ">
+                                        <span class='close-modal cursor-pointer bg-red-200 hover:bg-red-500 text-red-900 font-bold py-2 px-4 rounded' >
+                                            Close
+                                        </span>
+                                        <span class='close-modal bg-green-500 hover:bg-green-800 text-white font-bold mr-2 py-2 px-4 rounded' 
+                                        type="button" @click="updateMembers()">
+                                            Save
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+                                
+                                
+                            </div>
+                                
+                        </template>
+                    </modalCentered>
+
+
                 </div>
             </template>
         </userPanel>
@@ -202,15 +210,18 @@
 <script>
 
 import userPanel from '@/Layouts/userPanel.vue'
-
+import addStudents from '../../Components/addStudents.vue'
+import modalCentered from '@/Components/ModalCentered.vue'
 import { Link } from '@inertiajs/inertia-vue3'
 
 
 export default {
-    components: {userPanel, Link},
+    components: {userPanel, addStudents, Link, modalCentered},
 
     props: {
         classrooms: Array,
+        student_classrooms: Array,
+        students: Array,
     },
 
     data() {
@@ -225,14 +236,42 @@ export default {
                 Active: 1,
                 Institution_id: '1',          
             },
-            create: true,  
+            ClassroomStudents: [],
+            classroomID: null,
+            create: true,
+            modalState: null,  
                     
         }
     },
 
     methods: {
 
+        updateMembers(){
+        
+            this.$inertia.put(this.route('studentClassrooms.update', this.classroomID), this.ClassroomStudents) 
+
+        },
+
+        editMembers(classroomID){
+
+            this.modalState ='addStudentsModal'
+
+            // Get the classroomID
+            this.classroomID = classroomID
+        
+            // Filter the student_classrooms array
+            this.ClassroomStudents = []
+            this.student_classrooms.forEach(element => {
+                if(element.classroom_id == classroomID){
+                    this.ClassroomStudents.push(element)
+                }
+            })        
+            
+
+        },
+
         newClassroom() {
+            this.modalState ='editModal'
             this.create = true
             this.form = {
                 ClassName: null,
@@ -246,7 +285,8 @@ export default {
             }  
         },
 
-        editClassroom(classroom) {        
+        editClassroom(classroom) {    
+            this.modalState='editModal'    
             this.create = false
             this.form = classroom
         },
@@ -262,11 +302,6 @@ export default {
             }
         },
 
-        submitDescriptors() {
-            console.log("que onda cabron")
-
-        },
-
         destroy(id) {
             
             if(confirm('Are you sure?')){
@@ -274,54 +309,19 @@ export default {
             }
         },
 
-        toggleModal(action, elem_trigger)
-        {            
-            elem_trigger.addEventListener('click', function () {
-                if (action == 'add') {
-                    let modal_id = this.dataset.modal;
-                    document.getElementById(`${modal_id}`).classList.add('modal-is-open');
-                } else {
-                    // Automaticlly get the opened modal ID
-                    let modal_id = elem_trigger.closest('.modal-wrapper').getAttribute('id');
-                    document.getElementById(`${modal_id}`).classList.remove('modal-is-open');
-                }                
-            });
+        generateDescriptors() {
+            console.log("que onda cabron",this.classroomID)
+
+            
+
+
         },
-    },
 
-    mounted() {
-        // Check if there is modals on the page
-        if (document.querySelector('.modal-wrapper'))
-        {
-            // Open the modal
-            document.querySelectorAll('.modal-trigger').forEach(btn => {
-                this.toggleModal('add', btn);
-            });
-            
-            // close the modal
-            document.querySelectorAll('.close-modal').forEach(btn => {
-                this.toggleModal('remove', btn);
-            });
-        }   
-    },
 
-    updated() {
-        
-        // Check if there is modals on the page
-        if (document.querySelector('.modal-wrapper'))
-        {
-            // Open the modal
-            document.querySelectorAll('.modal-trigger').forEach(btn => {
-                this.toggleModal('add', btn);
-            });
-            
-            // close the modal
-            document.querySelectorAll('.close-modal').forEach(btn => {
-                this.toggleModal('remove', btn);
-            });
-        } 
         
     },
+
+    
     
 }
 

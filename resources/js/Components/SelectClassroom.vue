@@ -1,9 +1,7 @@
-<template>
-    <userPanel>
-        <template v-slot:Main>
-            <div class="flex-col">
-                    <!-- Select Classroom -->
-                    <div v-if="selected==''" class="md:flex md:items-center mb-6 py-3 px-4 pr-8 ">
+<!-- <template>
+    <div>
+        <!-- Select Classroom -->
+        <div v-if="selected==''" class="md:flex md:items-center mb-6 py-3 px-4 pr-8 ">
                         <div class="">
                             <label class="block text-gray-500 font-regular md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
                                 Please, select classroom: 
@@ -21,42 +19,29 @@
                             </div>
                         </div>                        
                     </div>
-                    <!-- End Select Classroom -->
-                    
-                    <!-- Camera  -->
-                    <cameraTool v-if="selected!=''"></cameraTool>
-                    
-                </div>
-        </template>
-        
-    </userPanel>
+        <!-- End Select Classroom -->
+    </div>
 </template>
-
 
 <script>
 
-import userPanel from '@/Layouts/userPanel.vue'
-import cameraTool from '@/Components/Camera.vue'
-
-import { Link } from '@inertiajs/inertia-vue3'
-
-
 export default {
-    components: {userPanel, cameraTool, Link},
 
     data() {
         return {
             selected: '',      
         }
     },
+
     props: {
         classrooms: Array,
+        selected: String,
     },
 
-    methods: {
-        
-    },
-    
+
+
+
+
+
 }
-
-</script>
+</script> -->

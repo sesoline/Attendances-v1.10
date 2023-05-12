@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classroom;
+use App\Models\Student_classroom;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;  
 
@@ -15,9 +17,17 @@ class ClassroomController extends Controller
      */
     public function index()
     {
-        //
+        // Query-> SELECT s.FirstName, s.LastName, sc.classroom_id  FROM students s left join student_classrooms sc ON s.id = sc.student_id 
+        $query = Student::join('student_classrooms','student_classrooms.student_id','=','students.id')                            
+                        ->select('students.id','students.FirstName','students.LastName','student_classrooms.classroom_id')
+                        ->get();
+
+        
+
         return Inertia::render('Classrooms/Index', [
-            'classrooms' => Classroom::all()
+            'classrooms' => Classroom::all(),
+            'students'   => Student::all(),
+            'student_classrooms' => $query,
         ]);
     }
 

@@ -26,11 +26,6 @@ class StudentController extends Controller
         // query-> select s.FirstName, c.ClassName from student_classrooms SC left join classrooms c on SC.classroom_id = c.id 
         // LEFT JOIN students s on SC.student_id = s.id
 
-
-        // Classrooms
-        $data['classrooms'] = Classroom::all();
-
-
         // Student's classrooms
         $data['student_classroom'] = Student_classroom::join('classrooms','student_classrooms.classroom_id','=','classrooms.id')
                                 ->join('students','student_classrooms.student_id','=','students.id')
@@ -39,7 +34,7 @@ class StudentController extends Controller
 
         return Inertia::render('Students/Index',[
             'students' => Student::all(),
-            'classrooms' => $data['classrooms'],
+            'classrooms' => Classroom::all(),
             'student_classrooms' => $data['student_classroom'] 
             ]);
 
@@ -115,7 +110,7 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student, Student_classroom $Student_classroom)
+    public function update(Request $request, Student $student)
     {
         
         $request->validate([
@@ -136,19 +131,45 @@ class StudentController extends Controller
         
         $student->update($request->request->all());
 
+        
+        ////////////     SAVING STUDENT'S CLASSROOMS IN DB    ////////////
 
-        ///// SAVING STUDENT'S CLASSROOMS IN DB
+        
+        // oldClassrooms will be the classes to delete in DB
+        $oldClassrooms = Student_classroom::where('student_id',$student['id'])->get()->toArray();
 
-        // Delete old classrooms registers
-        Student_classroom::where('student_id',$student['id'])->delete();
+        // newClassrooms will be the classes to save in DB
+        $newClassrooms = $request['StudentClassrooms'];
+        
+        // Filtering arrays
+        $oldIndex = 0;
+        foreach($oldClassrooms as $oldValue){
+            foreach($newClassrooms as $newIndex=>$newValue){
+                if($oldValue['classroom_id'] == (string) $newValue['classroom_id']){
+                    array_splice($oldClassrooms,$oldIndex,1);               
+                    array_splice($newClassrooms,$newIndex,1);
+                    $oldIndex--;
+                    break;
+                };          
+            };
+        $oldIndex++;   
+        };
 
-        // Updating new classrooms
-        foreach($request['StudentClassrooms'] as $element){             // to avoid forLoop -> Student_classroom::createMany()    
+        //dd($oldClassrooms,$newClassrooms,$request['StudentClassrooms']);
+
+        // Delete old classrooms registers in DB
+        foreach($oldClassrooms as $element){
+            Student_classroom::where('classroom_id',$element['classroom_id'])->where('student_id',$student['id'])->delete();
+        }
+        
+        // Adding new classrooms in DB
+        foreach($newClassrooms as $element){             // to avoid forLoop -> Student_classroom::createMany()    
             Student_classroom::create([
                     'student_id'=>$student['id'],
                     'classroom_id'=>$element['classroom_id']
             ]);
         };
+
 
         return redirect()->route('students.index');
 
@@ -163,11 +184,24 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //    
-        dd($student);
+        //      
         Storage::delete('public/' . $student['Photo']);     // delete the photo file saved previously in the server
         $student->delete();
 
         return Redirect::route('students.index');
+    }
+
+    ///////////////////// 
+
+    public function getDescriptors(Request $request){
+
+        $id = $request['classroomID'];     // I also can use $request->input('classroomID')
+        $members = Student::join('student_classrooms','student_classrooms.student_id','=','students.id')
+                          ->select('students.id','students.FirstName','students.LastName','students.FaceDescriptor')
+                          ->where('student_classrooms.classroom_id','=',$id)
+                          ->get(); 
+        //return response()->json($members);
+        return redirect()->route('Recognition.index');
+
     }
 }

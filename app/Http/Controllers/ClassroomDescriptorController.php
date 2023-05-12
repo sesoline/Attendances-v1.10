@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student_classroom;
+use App\Models\Student;
+use Inertia\Inertia;  
 
-class StudentClassroomController extends Controller
+class ClassroomDescriptorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -47,6 +49,18 @@ class StudentClassroomController extends Controller
     public function show($id)
     {
         //
+        
+        // I have to get from DB each student descriptor
+        //      query -> select s.id , s.FirstName , s.LastName , s.FaceDescriptor from students s left join student_classrooms sc on s.id = sc.student_id where sc.classroom_id =1
+
+        $members = Student::join('student_classrooms','student_classrooms.student_id','=','students.id')
+                          ->select('students.id','students.FirstName','students.LastName','students.FaceDescriptor')
+                          ->where('student_classrooms.classroom_id','=',$id)
+                          ->get();
+        
+        return Inertia::render('Photo/Recognition', [ 'members' => $members ]);
+                            
+          
     }
 
     /**
@@ -69,47 +83,7 @@ class StudentClassroomController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        ////////////     SAVING CLASSROOM'S STUDENTS IN DB    ////////////
-
-        
-        // oldMembers are the members to delete in DB
-        $oldMembers = Student_classroom::where('classroom_id',$id)->get()->toArray();
-
-        // newMembers are the new members to save in DB
-        $newMembers = $request->toArray();
-
-       
-        // Filtering arrays
-        $oldIndex = 0;
-        foreach($oldMembers as $oldValue){
-            foreach($newMembers as $newIndex=>$newValue){
-                if($oldValue['student_id'] == (string) $newValue['id']){
-                    array_splice($oldMembers,$oldIndex,1);               
-                    array_splice($newMembers,$newIndex,1);
-                    $oldIndex--;
-                    break;
-                };          
-            };
-        $oldIndex++;   
-        };
-
-        // Delete old members registers in DB
-        foreach($oldMembers as $element){
-            Student_classroom::where('student_id', $element['student_id'])->where('classroom_id',$id)->delete();          
-        }
-        
-
-        // Adding new members to the classroom in DB
-        foreach($newMembers as $element){            
-            Student_classroom::create([
-                    'student_id'=>$element['id'],
-                    'classroom_id'=>$id,
-            ]);
-        };
-
-
-        return redirect()->route('classrooms.index');
+        //
     }
 
     /**

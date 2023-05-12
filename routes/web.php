@@ -42,7 +42,17 @@ Route::get('/test02', function () {
     return Inertia::render('test02');
             })->name('test02');
 
+Route::get('/Recognition', function () { 
+                return Inertia::render('Recognition/index');
+                        })->name('test02');
+
+Route::post('/Students/getDescriptors', [  App\Http\Controllers\StudentController::class,'getDescriptors']);
+
+//Route::get('/classroomDescriptor', 'App\Http\Controllers\classroomDescriptorController@update');
+            
 Route::resource('students', App\Http\Controllers\StudentController::class);
 Route::resource('attendances', App\Http\Controllers\AttendanceController::class);
 Route::resource('classrooms', App\Http\Controllers\ClassroomController::class);
-Route::resource('photo', App\Http\Controllers\PhotoController::class);
+Route::resource('recognition', App\Http\Controllers\PhotoController::class);
+Route::resource('studentClassrooms', App\Http\Controllers\StudentClassroomController::class);
+Route::resource('classroomDescriptor', App\Http\Controllers\ClassroomDescriptorController::class);

@@ -2,77 +2,67 @@
     <div>
         <userPanel>
             <template v-slot:Main>
-                <div class="mx-auto flex-col">
-                    
+                <div class="mx-auto flex-col">                   
                     <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
-                    <!--Horizontal form-->
-                    <div class="mb-2 border-solid border-grey-light rounded border shadow-sm w-full md:w-full lg:w-full">
-                        <div class="flex flex-row justify-between content-end bg-gray-300 px-2 py-3 border-solid border-gray-400 border-b">
-                            <div class="py-2 px-4 ">Students</div>
-                            <div>                                
-                                <button data-modal="centeredFormModal" type="Button" @click.prevent="newStudent()"
-                                class="bg-green-500 modal-trigger hover:bg-green-800 text-white font-bold py-2 px-4 rounded ">
-                                    Create Student
-                                </button>                                                            
+
+                        <!--Horizontal form-->
+                        <div class="mb-2 border-solid border-grey-light rounded border shadow-sm w-full md:w-full lg:w-full">
+                            <div class="flex flex-row justify-between content-end bg-gray-300 px-2 py-3 border-solid border-gray-400 border-b">
+                                <div class="py-2 px-4 ">Students</div>
+                                <div>                                
+                                    <button data-modal="centeredFormModal" type="Button" @click.prevent="newStudent()"
+                                    class="bg-green-500 modal-trigger hover:bg-green-800 text-white font-bold py-2 px-4 rounded ">
+                                        Create Student
+                                    </button>                                                            
+                                </div>
+                                
                             </div>
                             
-                        </div>
-                        
-                        <div class="p-3">
-                            <table class="table-fixed">
-                                <thead>
-                                <tr>
-                                    <th class="border w-1/16 px-4 py-2 text-center"> No. </th>
-                                    <th class="border w-1/4 px-4 py-2 text-center"> Last Name </th>
-                                    <th class="border w-1/4 px-4 py-2 text-center"> First Name </th>
-                                    <th class="border w-1/4 px-4 py-2 text-center"> Telephone </th>                                
-                                    <th class="border w-1/4 px-4 py-2 text-center"> email </th>
-                                    <th class="border w-1/8 px-4 py-2 text-center"> Foto </th>
-                                    <th class="border w-1/2 px-4 py-2 text-center"> Options </th>
-                                </tr>
-                                </thead>
-                                <tbody>                                                                        
-                                        <tr class="text-sm" v-for="(Student, index) in students" :key="Student.id">
-                                            <td class="border px-1 py-1 text-center"> {{index}} </td>  
-                                            <td class="border px-1 py-1 text-center">{{ Student.LastName }}</td>                                        
-                                            <td class="border px-1 py-1 text-center">{{ Student.FirstName}}</td>
-                                            <td class="border px-1 py-1 text-center">{{ Student.Telephone}}</td>                                            
-                                            <td class="border px-1 py-1 text-center">{{ Student.email}}</td>
-                                            <td class="border px-1 py-1 place-content-center">
-                                                <img class="mx-auto" :src="'storage/'+Student.Photo" :alt="Student.FirstName" width="30" > 
-                                            </td>
+                            <div class="p-3">
+                                <table class="table-fixed">
+                                    <thead>
+                                    <tr>
+                                        <th class="border w-1/16 px-4 py-2 text-center"> No. </th>
+                                        <th class="border w-1/4 px-4 py-2 text-center"> Last Name </th>
+                                        <th class="border w-1/4 px-4 py-2 text-center"> First Name </th>
+                                        <th class="border w-1/4 px-4 py-2 text-center"> Telephone </th>                                
+                                        <th class="border w-1/4 px-4 py-2 text-center"> email </th>
+                                        <th class="border w-1/8 px-4 py-2 text-center"> Foto </th>
+                                        <th class="border w-1/2 px-4 py-2 text-center"> Options </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>                                                                        
+                                            <tr class="text-sm" v-for="(Student, index) in students" :key="Student.id">
+                                                <td class="border px-1 py-1 text-center"> {{index}} </td>  
+                                                <td class="border px-1 py-1 text-center">{{ Student.LastName }}</td>                                        
+                                                <td class="border px-1 py-1 text-center">{{ Student.FirstName}}</td>
+                                                <td class="border px-1 py-1 text-center">{{ Student.Telephone}}</td>                                            
+                                                <td class="border px-1 py-1 text-center">{{ Student.email}}</td>
+                                                <td class="border px-1 py-1 place-content-center">
+                                                    <img class="mx-auto" :src="'storage/'+Student.Photo" :alt="Student.FirstName" width="30" > 
+                                                </td>
 
-                                            <td class="border px-4 py-2">
-                                                <a data-modal="centeredFormModal" class="modal-trigger" href="#" @click="editStudent(Student)" >
-                                                    Edit
-                                                </a>
-                                                    | 
-                                                <a href="#" @click.prevent="destroy(Student.id)">
-                                                   Delete 
-                                                </a>
-                                            </td>
-                                        </tr>                                                                                                                                       
-                                </tbody>
-                            </table>
-                        </div>
+                                                <td class="border px-4 py-2">
+                                                    <a data-modal="centeredFormModal" class="modal-trigger" href="#" @click="editStudent(Student)" >
+                                                        Edit
+                                                    </a>
+                                                        | 
+                                                    <a href="#" @click.prevent="destroy(Student.id)">
+                                                    Delete 
+                                                    </a>
+                                                </td>
+                                            </tr>                                                                                                                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                                        
                     </div>
-                    <!--/Horizontal form-->                    
-                    </div>
-                    <!-- Centered With a Form Modal -->
-                    <div id='centeredFormModal' class="modal-wrapper">
-                        <div class="overlay close-modal"></div>
-                        <div class="modal modal-centered">
-                            <div class="modal-content shadow-lg p-5">
-                                <div class="border-b p-2 pb-3 pt-0 mb-4">
-                                <div class="flex justify-between items-center">
-                                        Student
-                                        <span class='close-modal cursor-pointer px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200'>
-                                            <i class="fas fa-times text-gray-700"></i>
-                                        </span>
-                                </div>
-                                </div>
-                                <!-- Modal content -->
-                                <form id='form_id' @submit.prevent="submit()" class="w-full">
+
+                    <!-- MODAL -->
+                    <modalCentered>
+                        <template v-slot:title>Student</template>
+                        <template v-slot:content>
+                            <form id='form_id' @submit.prevent="submit()" class="w-full">
                                     <div class="flex flex-wrap -mx-3 mb-6">
                                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-first-name">
@@ -150,10 +140,10 @@
                                             Close
                                         </span>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                                </form>                         
+                        </template>
+                    </modalCentered>
+
                 </div>
             </template>
         </userPanel>
@@ -164,6 +154,7 @@
 
 import userPanel from '@/Layouts/userPanel.vue'
 import addClassroom from '@/Components/addClassroom.vue'
+import modalCentered from '@/Components/ModalCentered.vue'
 
 import { Link } from '@inertiajs/inertia-vue3'
 
@@ -171,7 +162,7 @@ import '@/main.js'
 
 
 export default {
-    components: {userPanel, Link, addClassroom},
+    components: {userPanel, Link, addClassroom, modalCentered},
 
     props: {
         students: Array,
@@ -218,7 +209,7 @@ export default {
         editStudent(student) {
             
             this.create = false
-            this.form = student
+            this.form = student            
             this.form.StudentClassrooms = [] 
 
             // I had to use JSON cuz the filter method leave me a proxy array that insert errors on vuejs
@@ -241,7 +232,7 @@ export default {
            
                 // It will be making a put to theserver using post
 
-                console.log(this.form.StudentClassrooms,'guardado')
+                console.log(this.form.StudentClassrooms,'||',this.form.id,'saving')
                 this.$inertia.post(this.route('students.update',this.form.id), Object.assign({'_method': 'put'},this.form)) 
                  //   However, you can also use this:
                  // 
@@ -260,59 +251,9 @@ export default {
             }
         },
 
-        toggleModal(action, elem_trigger)
-        {            
-            elem_trigger.addEventListener('click', function () {
-                if (action == 'add') {
-                    let modal_id = this.dataset.modal;
-                    document.getElementById(`${modal_id}`).classList.add('modal-is-open');
-                } else {
-                    // Automaticlly get the opned modal ID
-                    let modal_id = elem_trigger.closest('.modal-wrapper').getAttribute('id');
-                    document.getElementById(`${modal_id}`).classList.remove('modal-is-open');
-                }                
-            });
-        },
         
     },
 
-    
-
-    mounted() {
-        
-        // Check if there is modals on the page
-        if (document.querySelector('.modal-wrapper'))
-        {
-            // Open the modal
-            document.querySelectorAll('.modal-trigger').forEach(btn => {
-                this.toggleModal('add', btn);
-            });
-            
-            // close the modal
-            document.querySelectorAll('.close-modal').forEach(btn => {
-                this.toggleModal('remove', btn);
-            });
-        } 
-        
-    },
-
-    updated() {
-        
-        // Check if there is modals on the page
-        if (document.querySelector('.modal-wrapper'))
-        {
-            // Open the modal
-            document.querySelectorAll('.modal-trigger').forEach(btn => {
-                this.toggleModal('add', btn);
-            });
-            
-            // close the modal
-            document.querySelectorAll('.close-modal').forEach(btn => {
-                this.toggleModal('remove', btn);
-            });
-        } 
-        
-    },
     
 }
 

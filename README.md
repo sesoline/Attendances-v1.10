@@ -34,7 +34,7 @@ visit `localhost
 
 - hacer un componente para agregar salones a un estudiante
 - Classroom view has to have the option to add students in every classroom
-- Students has to show wich clases belong to in the option edit into the students view
+
 
 
 update models controller and views after theses changes
@@ -46,6 +46,7 @@ finally, continue working with 'add descriptors' option into clasroom view
 
 bug
 - salon repetido no borra el search box
+- No se borra letras al cerrar modal en addStudents de la pagina classrooms
 
 Questions
 - Is it bad idea delete registers to save the save ones? (classrooms controller update student_classrooms)
