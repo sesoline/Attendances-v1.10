@@ -2,9 +2,8 @@ import './bootstrap';
 import '../css/app.css';
 import '../css/all.css';
 import '../css/styles.css';
-//import '../js/main.js';
 
-//import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i';
+
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/inertia-vue3';

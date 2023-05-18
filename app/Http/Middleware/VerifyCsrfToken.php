@@ -13,5 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        // Aqui se poner las direccion excentas de CSRF ejemplo:  '/Students/getDescriptors',
     ];
 }

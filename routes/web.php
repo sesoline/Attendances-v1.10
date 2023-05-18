@@ -3,7 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AttendanceController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,23 +37,17 @@ Route::middleware([
 
 Route::get('/test', function () { 
     return Inertia::render('Classrooms/Index');
-            })->name('tester');
+            })->name('tester');            
 
-Route::get('/test02', function () { 
-    return Inertia::render('test02');
-            })->name('test02');
-
-Route::get('/Recognition', function () { 
-                return Inertia::render('Recognition/index');
-                        })->name('test02');
-
-Route::post('/Students/getDescriptors', [  App\Http\Controllers\StudentController::class,'getDescriptors']);
-
-//Route::get('/classroomDescriptor', 'App\Http\Controllers\classroomDescriptorController@update');
-            
-Route::resource('students', App\Http\Controllers\StudentController::class);
-Route::resource('attendances', App\Http\Controllers\AttendanceController::class);
+// RESOURCES
+Route::resource('students', StudentController::class);
+Route::resource('attendances', AttendanceController::class);
 Route::resource('classrooms', App\Http\Controllers\ClassroomController::class);
-Route::resource('recognition', App\Http\Controllers\PhotoController::class);
 Route::resource('studentClassrooms', App\Http\Controllers\StudentClassroomController::class);
 Route::resource('classroomDescriptor', App\Http\Controllers\ClassroomDescriptorController::class);
+//Route::resource('photo', App\Http\Controllers\PhotoController::class);     // OFF DEVELOP
+
+
+//  RECOGNITION TAB ROUTES
+Route::get('/Recognition', [StudentController::class,'recognitionIndex'])->name('recognition.index');
+Route::post('/Students/getDescriptors', [StudentController::class,'getDescriptors']);

@@ -191,17 +191,34 @@ class StudentController extends Controller
         return Redirect::route('students.index');
     }
 
-    ///////////////////// 
+    ///////////////////// RECOGNITION TAB 
+
+    public function recognitionIndex(){
+
+        // Go to the recognition tab
+        return Inertia::render('Recognition/Index', [
+            'classrooms' => Classroom::all(),
+            'state' => '01',
+        ]);
+
+    }
 
     public function getDescriptors(Request $request){
 
-        $id = $request['classroomID'];     // I also can use $request->input('classroomID')
+        $id = $request->input('classroomID');     // I also can use $request->input('classroomID')
+
         $members = Student::join('student_classrooms','student_classrooms.student_id','=','students.id')
-                          ->select('students.id','students.FirstName','students.LastName','students.FaceDescriptor')
+                          ->select('students.id','students.FirstName','students.LastName','students.FaceDescriptor','students.Photo')
                           ->where('student_classrooms.classroom_id','=',$id)
                           ->get(); 
-        //return response()->json($members);
-        return redirect()->route('Recognition.index');
+                          
+        return response()->json($members);
+        
+        // return Inertia::render('Recognition/Index', [
+        //         'classrooms' => null,
+        //         'members' => $members,
+        //         'state' => '02',
+        // ]);
 
     }
 }

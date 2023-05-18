@@ -1,4 +1,4 @@
-console.log('miadfuw')
+console.log('main.js')
 
 var sidebar = document.getElementById('sidebar');
 
